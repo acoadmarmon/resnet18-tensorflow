@@ -88,6 +88,9 @@ def _obtain_input_shape(input_shape,
                         data_format,
                         require_flatten,
                         weights=None):
+    """
+    Private function taken from Tensorflow internal library.
+    """
     if weights != 'imagenet' and input_shape and len(input_shape) == 3:
         if data_format == 'channels_first':
             default_shape = (input_shape[0], default_size, default_size)
