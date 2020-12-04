@@ -88,37 +88,10 @@ def _obtain_input_shape(input_shape,
                         data_format,
                         require_flatten,
                         weights=None):
-    """Internal utility to compute/validate a model's input shape.
-    # Arguments
-        input_shape: Either None (will return the default network input shape),
-            or a user-provided shape to be validated.
-        default_size: Default input width/height for the model.
-        min_size: Minimum input width/height accepted by the model.
-        data_format: Image data format to use.
-        require_flatten: Whether the model is expected to
-            be linked to a classifier via a Flatten layer.
-        weights: One of `None` (random initialization)
-            or 'imagenet' (pre-training on ImageNet).
-            If weights='imagenet' input channels must be equal to 3.
-    # Returns
-        An integer shape tuple (may include None entries).
-    # Raises
-        ValueError: In case of invalid argument values.
-    """
     if weights != 'imagenet' and input_shape and len(input_shape) == 3:
         if data_format == 'channels_first':
-            if input_shape[0] not in {1, 3}:
-                warnings.warn(
-                    'This model usually expects 1 or 3 input channels. '
-                    'However, it was passed an input_shape with ' +
-                    str(input_shape[0]) + ' input channels.')
             default_shape = (input_shape[0], default_size, default_size)
         else:
-            if input_shape[-1] not in {1, 3}:
-                warnings.warn(
-                    'This model usually expects 1 or 3 input channels. '
-                    'However, it was passed an input_shape with ' +
-                    str(input_shape[-1]) + ' input channels.')
             default_shape = (default_size, default_size, input_shape[-1])
     else:
         if data_format == 'channels_first':
